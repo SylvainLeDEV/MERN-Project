@@ -19,25 +19,34 @@ module.exports.userInfo = (req, res, next) => {
     }).select('-password')
 }
 
-module.exports.updateUser = async (req, res, next) => {
+module.exports.updateUser = (req, res, next) => {
+    //1:27:00
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send('ID unknow : ' + req.params.id);
 
-    try{
-        await userModel.findOneAndUpdate(
+    try {
+         userModel.findOneAndUpdate(
             {_id: req.params.id},
             {
-                $set: {
+                $set:{
                     bio: req.body.bio
                 }
             },
-            {new: true, upsert:true, setDefaultsOnInsert: true},
+            {new: true, upsert: true, setDefaultsOnInsert: true},
             (err, docs) => {
                 if (!err) return res.send(docs);
-                if (err) return res.status(500).send({message:"Pas pris en compte",err});
+                if (err)  return res.status(500).send({message: "Pas pris en compte", err});
             }
         )
-    }catch (err){
-        return res.status(500).json({message:"UpdateBio faild",err});
+    } catch (err) {
+        return res.status(500).json({message: "UpdateBio faild", err});
     }
+}
+
+module.exports.deleteUser = (req, res, next) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send('ID unknow : ' + req.params.id);
+
+        userModel.deleteOne({_id: req.params.id}).exec();
+        res.status(200).json({message: "Successfully deleted."})
 }
