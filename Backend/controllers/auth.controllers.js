@@ -1,4 +1,5 @@
 const userModel = require('../models/user.models');
+const errorsUtils = require('../utils/errors.utils');
 //JWT sont des jetons générés par un serveur lors de l’authentification
 // d’un utilisateur sur une application Web, et qui sont ensuite transmis au client.
 const jwt = require("jsonwebtoken");
@@ -18,7 +19,8 @@ module.exports.signUp = async (req, res) => {
         const user = await userModel.create({pseudo, email, password});
         res.status(201).json({user: user._id})
     } catch (err) {
-        res.status(400).send({err})
+        const errors = errorsUtils.signUpErrors(err)
+        res.status(400).send({errors})
     }
 
 }
