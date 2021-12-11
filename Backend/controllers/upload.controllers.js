@@ -10,7 +10,7 @@ module.exports.uploadProfil = async (req, res) => {
 
 
     try {
-        console.log(req.file)
+        // console.log(req.file)
         // console.log(req.file.mimetype !== 'image/png')
         if (req.file.mimetype !== 'image/png' && req.file.mimetype !== 'image/jpg' && req.file.mimetype !== 'image/jpeg')
             throw Error("invalid file");
