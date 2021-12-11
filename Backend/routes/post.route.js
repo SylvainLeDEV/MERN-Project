@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const postControllers = require('../controllers/post.controller');
 
+
 // Routes for post and like
 router.get('/', postControllers.readPost);
 router.post('/', postControllers.createPost);
@@ -13,5 +14,6 @@ router.patch('/unlike-post/:id', postControllers.unlikePost);
 router.patch('/comment-post/:id', postControllers.commentPost);
 router.patch('/edit-comment-post/:id', postControllers.editCommentPost);
 router.patch('/delete-comment-post/:id', postControllers.deleteCommentPost);
+
 
 module.exports = router;
