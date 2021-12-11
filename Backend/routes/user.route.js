@@ -5,6 +5,8 @@ const uploadController = require('../controllers/upload.controllers');
 const multer = require("multer");
 const upload = multer();
 
+// const multer = require('../middleware/multer-config');
+
 //Authentification
 router.post("/register", authController.signUp);
 router.post("/login", authController.signIn);
@@ -19,7 +21,7 @@ router.patch("/follow/:id", userController.follow)
 router.patch("/unfollow/:id", userController.unfollow)
 
 //Upload
-router.post("/upload", upload.single("file"), uploadController.uploadProfil);
+router.post("/upload", upload.single('file'), uploadController.uploadProfil);
 
 
 module.exports = router;
