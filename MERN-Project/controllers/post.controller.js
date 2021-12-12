@@ -56,7 +56,7 @@ module.exports.createPost = async (req, res, next) => {
         likers: [],
         comments: [],
     });
-    console.log(fileName)
+    // console.log(fileName)
     try {
         const post = await newPost.save();
         return res.status(201).json(post);

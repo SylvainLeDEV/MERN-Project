@@ -6,10 +6,22 @@ const postRoutes = require('./routes/post.route');
 require('dotenv').config({path: './config/.env'});
 const {checkUser, requireAuth} = require("./middleware/auth.middleware");
 require('./config/db');
+const cors = require('cors');
 
 const app = express();
 
-//
+//Cors Policy
+const corsOption = {
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    'allowedHeaders': ['sessionId', 'Content-Type'],
+    'exposedHeaders': ['sessionId'],
+    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    'preflightContinue': false
+}
+app.use(cors(corsOption));
+
+//Body parser
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 // app.use(bodyParser.json());
