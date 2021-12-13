@@ -6,18 +6,22 @@ import axios from "axios";
 const App = () => {
     const [uid, setUid] = useState(null);
 
-    useEffect(async () => {
-        await axios({
-            method: "get",
-            url: `${process.env.REACT_APP_API_URL}jwtid`,
-            withCredentials: true,
-        })
-            .then((res) => {
-                console.log(res)
-                setUid(res.data)
+    useEffect(() => {
+        const fetchToken = async() => {
+            await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}jwtid`,
+                withCredentials: true,
             })
-            .catch((err) => console.log("No token"))
-    },[uid])
+                .then((res) => {
+                    console.log(res)
+                    setUid(res.data)
+                })
+                .catch((err) => console.log("No token"))
+        }
+        fetchToken();
+    }, [uid])
+
 
     return (
         <UidContext.Provider value={uid}>
