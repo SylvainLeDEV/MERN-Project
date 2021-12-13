@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Routes from "./components/routes";
-import {UidContext} from "./components/routes/AppContext";
+import {UidContext} from "./components/AppContext";
 import axios from "axios";
 
 const App = () => {
