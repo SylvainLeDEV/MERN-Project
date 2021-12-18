@@ -1,10 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import LeftNav from "../LeftNav";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import UploadImg from "./UploadImg";
+import {updateBio} from "../../actions/user.actions";
+import {dateParser} from "../Utils";
 
 const UpdateProfil = () => {
-    const userData = useSelector((state => state.userReducer))
+    const [bio, setBio] = useState('');
+    const [updateForm, setUpdateForm] = useState(false);
+    const [followingPopup, setFollonwingPopup] = useState(false);
+    const [followersPopup, setFollowersPopup] = useState(false);
+    const userData = useSelector((state => state.userReducer));
+    const dispatch = useDispatch();
+
+    const handleUpdate = () => {
+        dispatch(updateBio(userData._id, bio));
+        setUpdateForm(false)
+    }
+
     return (
         <div className="profil-container">
             <LeftNav/>
@@ -14,10 +27,48 @@ const UpdateProfil = () => {
                 <div className="left-part">
                     <h3>Photo de profil</h3>
                     <img src={userData.picture} alt="user-pic"/>
-                    <UploadImg />
+                    <UploadImg/>
+                </div>
 
+                <div className="right-part">
+                    <div className="bio-update">
+                        <h3>Bio</h3>
+                        {updateForm === false && (
+                            <>
+                                <p onClick={() => setUpdateForm(!updateForm)}>{userData.bio}</p>
+                                <button onClick={() => setUpdateForm(!updateForm)}>
+                                    Modifier Bio
+                                </button>
+                            </>
+                        )}
+                        {updateForm && (
+                            <>
+                                <textarea type="text" defaultValue={userData.bio} onChange={(e) => {
+                                    setBio(e.target.value)
+                                }}></textarea>
+                                <button onClick={handleUpdate}>Valider modification</button>
+                            </>
+                        )}
+                    </div>
+                    <h4>Membre depuis le : {dateParser(userData.createdAt)}</h4>
+                    <h5 onClick={() => setFollonwingPopup(true)}>Abonnements
+                        : {userData.following ? userData.following.length : "0"}</h5>
+                    <h5 onClick={() => setFollowersPopup(true)}>Abonnée
+                        : {userData.followers ? userData.followers.length : "0"}</h5>
                 </div>
             </div>
+            {followingPopup && (
+                <div className="popup-profil-container">
+                    <div className="modal">
+                        <h3>Abonnements</h3>
+                        <span className="cross" onClick={() => setFollonwingPopup(false)}>&#10005;</span>
+                        <ul>
+                            <li>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                </div>)}
         </div>
     );
 };

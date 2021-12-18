@@ -2,10 +2,10 @@ const router = require('express').Router();
 const authController = require('../controllers/auth.controllers');
 const userController = require('../controllers/user.controllers');
 const uploadController = require('../controllers/upload.controllers');
-const multer = require("multer");
-const upload = multer();
+// const multer = require("multer");
+// const upload = multer();
 
-// const multer = require('../middleware/multer-config');
+const multer = require('../middleware/multer-config');
 
 //Authentification
 router.post("/register", authController.signUp);
@@ -21,7 +21,7 @@ router.patch("/follow/:id", userController.follow)
 router.patch("/unfollow/:id", userController.unfollow)
 
 //Upload
-router.post("/upload", upload.single('file'), uploadController.uploadProfil);
+router.post("/upload", multer, uploadController.uploadProfil);
 
 
 module.exports = router;
