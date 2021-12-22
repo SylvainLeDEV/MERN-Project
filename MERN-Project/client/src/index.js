@@ -16,13 +16,13 @@ const store = createStore(
     rootReducer, composeWithDevTools(applyMiddleware(thunk)) //Logger
 )
 
-store.dispatch(getUsers)
+store.dispatch(getUsers())
 
 ReactDOM.render(
     <Provider store={store}>
         <App/>
     </Provider>,
-document.getElementById('root')
+    document.getElementById('root')
 )
 ;
 
