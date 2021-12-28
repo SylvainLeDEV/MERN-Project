@@ -43,7 +43,7 @@ module.exports.createPost = async (req, res, next) => {
     await pipeline(
         req.file.fieldname,
         fs.createWriteStream(
-            `${__dirname}/../client/public/upload/post/${fileName}`
+            `${__dirname}/../client/public/uploads/posts/${fileName}`
         )
     );
 
@@ -51,12 +51,12 @@ module.exports.createPost = async (req, res, next) => {
     const newPost = new postModel({
         posterId: req.body.posterId,
         message: req.body.message,
-        picture: req.file !== null ? "./uploads/post/" + fileName : "",
+        picture: req.file !== null ? "./uploads/posts/" + fileName : "",
         video: req.body.video,
         likers: [],
         comments: [],
     });
-    // console.log(fileName)
+    console.log(fileName)
     try {
         const post = await newPost.save();
         return res.status(201).json(post);
