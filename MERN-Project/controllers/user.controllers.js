@@ -98,7 +98,7 @@ module.exports.unfollow = (req, res, next) => {
             }
         );
 
-        //add to the following list
+        //Remove to the following list
         userModel.findByIdAndUpdate(
             req.body.idToUnfollow,
             {$pull: {followers: req.params.id}},
