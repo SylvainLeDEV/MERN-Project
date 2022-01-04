@@ -6,6 +6,7 @@
 /.cache
 .DS_Store
 /MERN-Project/config/.env
+/MERN-Project/.idea
 
 
 
