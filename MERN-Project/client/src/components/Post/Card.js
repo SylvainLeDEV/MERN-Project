@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import {dateParser, isEmpty} from "../Utils";
 import FollowHandler from "../profil/FollowHandler";
+import LikeButton from "./LikeButton";
 
 const Card = ({post}) => {
 
@@ -42,24 +43,19 @@ const Card = ({post}) => {
                             <span>{dateParser(post.createdAt)}</span>
                         </div>
                         <p>{post.message}</p>
-                        {post.picture && <img src={post.picture} alt="card-pic" className="card-pic"/>}
+                        {post.picture && (<img src={post.picture} alt="card-pic" className="card-pic"/>)}
                         {post.video && (
-                            <iframe
-                                width="500"
-                                height="300"
-                                src={post.video}
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                title={post._id}
-                            />
+                            <iframe id="player" type="text/html" width="640" height="360"
+                                    src={post.video}
+                                    frameBorder="0"></iframe>
                         )}
                         <div className="card-footer">
                             <div className="comment-icon">
                                 <img src="./img/icons/message1.svg" alt="Comment"/>
                                 <span>{post.comments.length}</span>
                             </div>
-                            <h6>like Button</h6>
+
+                            <LikeButton post={post}/>
                             <img src="./img/icons/share.svg" alt="Share"/>
                         </div>
                     </div>
